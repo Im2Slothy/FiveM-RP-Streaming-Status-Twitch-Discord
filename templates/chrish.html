@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Status Display</title>
+    <style>  
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        .status-container {
+            display: flex;
+            flex-direction: column;  /* Stack items vertically */
+            align-items: flex-end;   /* Align items to the right */
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .info {
+            text-align: right;
+        }
+        .status-info {
+            text-align: right;
+            width: 100%;
+        }
+        .status-text {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+        .current-status-green {
+            color: #05b027;
+        }
+        .current-status-blue {
+            color: #057fb0;
+        }
+        .current-status-red {
+            color: #b00505;
+        }
+        .current-status-yellow {
+            color: #b0b005;
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #057fb0;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-container">
+        <div class="header">
+            <div class="info">
+                <div class="status-text" id="rank"></div>
+                <div class="status-text" id="name"></div>
+                <div class="status-text" id="department"></div>
+            </div>
+            <img id="profile-pic" class="profile-pic" src="static/face.png" alt="Profile Picture">
+        </div>
+        <div class="status-info">
+            <div class="status-text">Current Status: <span class="current-status-blue" id="status"></span></div>
+            <div class="status-text">Current Call: <span class="current-status-blue" id="current_call"></span></div>
+        </div>
+    </div>
+
+    <script>
+function updateStatus() {
+    fetch('/status')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('rank').textContent = data.rank;
+            document.getElementById('name').textContent = data.name;
+            document.getElementById('department').textContent = data.department;
+            document.getElementById('status').textContent = data.status;
+            document.getElementById('current_call').textContent = data.current_call;
+            
+            const statusElement = document.getElementById('status');
+            const callElement = document.getElementById('current_call');
+            const profilePic = document.getElementById('profile-pic');
+            
+            // Color mapping for CSS classes
+            const colorMap = {
+                'red': 'current-status-red',
+                'yellow': 'current-status-yellow',
+                'green': 'current-status-green',
+                'blue': 'current-status-blue'
+            };
+            
+            // Color mapping for hex values
+            const colorHex = {
+                'red': '#b00505',
+                'yellow': '#b0b005',
+                'green': '#05b027',
+                'blue': '#057fb0'
+            };
+            
+            // Remove previous color classes
+            statusElement.classList.remove('current-status-red', 'current-status-yellow', 'current-status-green', 'current-status-blue');
+            callElement.classList.remove('current-status-red', 'current-status-yellow', 'current-status-green', 'current-status-blue');
+            
+            // Add new color class if it exists in the map, otherwise default to blue
+            const newColorClass = colorMap[data.color] || 'current-status-blue';
+            statusElement.classList.add(newColorClass);
+            callElement.classList.add(newColorClass);
+            
+            // Set profile picture border color directly if element exists
+            if (profilePic) {
+                const newBorderColor = colorHex[data.color] || colorHex['blue'];
+                profilePic.style.borderColor = newBorderColor;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching status:', error);
+        });
+}
+
+// Update status every 5 seconds
+setInterval(updateStatus, 5000);
+updateStatus(); // Initial update
+    </script>
+</body>
+</html>
