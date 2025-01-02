@@ -1,10 +1,11 @@
 from flask import Flask, render_template, jsonify
 import discord
 from discord.ext import commands
+from twitchio.ext import commands as tcommands
 import json
 import os
 import logging
-
+import threading
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -21,6 +22,83 @@ current_status = {
     "color": "green"
 
 }
+
+
+# Twitch bot setup
+class TwitchBot(tcommands.Bot):
+    def __init__(self):
+        super().__init__(
+            token='oauth:edit',
+            prefix='!',
+            initial_channels=['urchannel']
+        )
+
+    async def event_ready(self):
+        logger.info(f'Logged in to Twitch as | {self.nick}')
+
+    @tcommands.command()
+    async def p80(self, ctx):
+        current_status['status'] = "10-80"
+        current_status['current_call'] = "Vehicle Pursuit in Progress"
+        current_status['color'] = "red"
+        await ctx.send("Status updated to 10-80 - Vehicle Pursuit")
+        save_status()
+
+    @tcommands.command()
+    async def p70(self, ctx):
+        current_status['status'] = "10-70"
+        current_status['current_call'] = "Foot Pursuit in Progress"
+        current_status['color'] = "red"
+        await ctx.send("Status updated to 10-70 - Foot Pursuit")
+        save_status()
+
+    @tcommands.command()
+    async def p11(self, ctx):
+        current_status['status'] = "10-11"
+        current_status['current_call'] = "Traffic Stop"
+        current_status['color'] = "yellow"
+        await ctx.send("Status updated to 10-11 - Traffic Stop")
+        save_status()
+
+    @tcommands.command()
+    async def p8(self, ctx):
+        current_status['status'] = "10-8"
+        current_status['current_call'] = "Awaiting Calls"
+        current_status['color'] = "green"
+        await ctx.send("Status updated to 10-8 - Available")
+        save_status()
+
+    @tcommands.command()
+    async def p7(self, ctx):
+        current_status['status'] = "10-7"
+        current_status['current_call'] = "Off-Duty"
+        current_status['color'] = "green"
+        await ctx.send("Status updated to 10-7 - Off Duty")
+        save_status()
+
+    @tcommands.command()
+    async def p71(self, ctx):
+        current_status['status'] = "10-71"
+        current_status['current_call'] = "LSPD Assist \\ Supervisor Request"
+        current_status['color'] = "blue"
+        await ctx.send("Status updated to 10-71 - Supervisor Request")
+        save_status()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Discord bot setup
 intents = discord.Intents.default()
@@ -218,9 +296,14 @@ if __name__ == '__main__':
         except Exception as e:
             logger.error(f"Error loading status file: {e}")
     
+    # Create and start the Twitch bot
+    twitch_bot = TwitchBot()
+    threading.Thread(target=lambda: twitch_bot.run()).start()
+    logger.info("Twitch bot thread started")
+
     # Start the Discord bot in a separate thread
     import threading
-    threading.Thread(target=lambda: bot.run('EDIT YOURSELF!')).start()
+    threading.Thread(target=lambda: bot.run('EDIT')).start()
     logger.info("Discord bot thread started")
     
     # Start Flask app
