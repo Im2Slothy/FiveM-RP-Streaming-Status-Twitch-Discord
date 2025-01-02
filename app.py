@@ -84,6 +84,22 @@ class TwitchBot(tcommands.Bot):
         await ctx.send("Status updated to 10-71 - Supervisor Request")
         save_status()
 
+    @tcommands.command()
+    async def setstatus(self, ctx, new_status):
+        """Set the current status (10-97, 10-98, etc)"""
+        current_status['status'] = new_status
+        await ctx.send(f"Status updated to {new_status}")
+        logger.info(f"Status updated to {new_status}")
+        save_status()
+
+    @tcommands.command()
+    async def setcall(self, ctx, *, call_details):
+        """Set the current call details"""
+        current_status['current_call'] = call_details
+        await ctx.send(f"Call updated to {call_details}")
+        logger.info(f"Call updated to {call_details}")
+        save_status()
+
 
 
 
