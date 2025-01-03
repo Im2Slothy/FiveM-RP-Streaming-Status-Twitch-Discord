@@ -296,7 +296,7 @@ def save_status():
 # Flask routes
 @app.route('/')
 def index():
-    return render_template('chrish.html', status=current_status)
+    return render_template('index.html', status=current_status)
 
 @app.route('/status')
 def get_status():
