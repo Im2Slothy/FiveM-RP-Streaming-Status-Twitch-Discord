@@ -3,7 +3,7 @@
 A real-time status display system designed for law enforcement role-play communities. This project integrates Discord and Twitch chat with a web interface to dynamically update and display officer statuses. Perfect for streamers who want to show their current law enforcement RP status through OBS Browser Source.
 
 
-[Example](https://ibb.co/VtMGpPH)
+![Status Display Preview](https://i.ibb.co/wz8jyKL/image.png)
 
 ## Features
 
