@@ -1,6 +1,6 @@
 # FiveM RP Streaming Status
 
-A real-time status display system designed for law enforcement role-play communities. This project integrates Discord and Twitch chat with a web interface to dynamically update and display officer statuses. Perfect for streamers who want to show their current law enforcement RP status through OBS Browser Source.
+A real-time status display system designed for law enforcement role-play communities. This project integrates Discord and Twitch chat with a web interface to dynamically update and display officer statuses.
 
 
 [Example](https://ibb.co/VtMGpPH)
