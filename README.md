@@ -4,6 +4,7 @@ A real-time status display system designed for law enforcement role-play communi
 
 
 [Example](https://ibb.co/VtMGpPH)
+https://x.com/Im2Slothy/status/1875295307627688020
 ## Features
 
 - **Real-time Updates:** Web interface automatically refreshes every 5 seconds
