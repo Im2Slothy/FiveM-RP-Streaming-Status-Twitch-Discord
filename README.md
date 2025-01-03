@@ -34,8 +34,8 @@ https://x.com/Im2Slothy/status/1875295307627688020
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/OBS-Browser-Src-Sync-With-Discord.git
-cd OBS-Browser-Src-Sync-With-Discord
+git clone https://github.com/Im2Slothy/FiveM-RP-Streaming-Status-Twitch-Discord.git
+cd FiveM-RP-Streaming-Status-Twitch-Discord
 ```
 
 2. Install required Python packages:
