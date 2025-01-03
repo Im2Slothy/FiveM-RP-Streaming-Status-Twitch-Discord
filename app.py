@@ -14,8 +14,8 @@ app = Flask(__name__, static_folder='static')
 
 # Store current status in memory (could be moved to a database for persistence)
 current_status = {
-    "rank": "LSPD Corporal",
-    "name": "Chris H. | 1006",
+    "rank": "LSPD Officer",
+    "name": "John D. | 1234",
     "department": "Los Santos Police Department",
     "status": "10-8",
     "current_call": "No Active Calls",
